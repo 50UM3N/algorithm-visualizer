@@ -1,0 +1,49 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #555b6e;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  background-color: #faf9f9;
+  padding: 1rem;
+  margin: 1rem auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-self: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.container .state {
+  background-color: #89b0ae;
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.container .state::after {
+  content: attr(data);
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.container .state + .state {
+  margin-left: 0.5rem;
+}
+/*# sourceMappingURL=style.css.map */
