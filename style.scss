@@ -9,6 +9,10 @@ body {
 }
 .container {
     width: 100%;
+    margin: 1rem auto;
+}
+.visulizer-container {
+    width: 100%;
     max-width: 900px;
     height: 500px;
     background-color: #faf9f9;
@@ -23,6 +27,8 @@ body {
         width: 100%;
         border-radius: 0.5rem;
         position: relative;
+        transition: all ease-in-out;
+        transition-duration: 0.3s;
     }
     .state::after {
         content: attr(data);

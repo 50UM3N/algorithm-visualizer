@@ -12,6 +12,11 @@ body {
 
 .container {
   width: 100%;
+  margin: 1rem auto;
+}
+
+.visulizer-container {
+  width: 100%;
   max-width: 900px;
   height: 500px;
   background-color: #faf9f9;
@@ -26,15 +31,19 @@ body {
           align-items: flex-end;
 }
 
-.container .state {
+.visulizer-container .state {
   background-color: #89b0ae;
   height: 100%;
   width: 100%;
   border-radius: 0.5rem;
   position: relative;
+  -webkit-transition: all ease-in-out;
+  transition: all ease-in-out;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 
-.container .state::after {
+.visulizer-container .state::after {
   content: attr(data);
   position: absolute;
   left: 50%;
@@ -43,7 +52,7 @@ body {
           transform: translateX(-50%);
 }
 
-.container .state + .state {
+.visulizer-container .state + .state {
   margin-left: 0.5rem;
 }
 /*# sourceMappingURL=style.css.map */
