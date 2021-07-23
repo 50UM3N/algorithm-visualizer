@@ -71,15 +71,54 @@ const bubbleVisualizer = (index, color, type) => {
     }
 };
 
-function insertionSort(arr) {
+async function insertionSort(arr) {
+    insertionSortVisualizer(0, "#82E0AA", "set")
     for (let i = 1; i < arr.length; i++) {
         let val = arr[i];
         let blankSpace = i;
+        insertionSortVisualizer(i, "grey", "fill");
+        await delay(speed*3);
+
         while (blankSpace > 0 && arr[blankSpace - 1] > val) {
             arr[blankSpace] = arr[blankSpace - 1];
+            insertionSortVisualizer(blankSpace, "grey", "moveHole");
             blankSpace--;
+            setState(arr);
+            await delay(speed*2);
         }
+        insertionSortVisualizer(blankSpace, "green", "fill");
+        await delay(speed*2);
         arr[blankSpace] = val;
+        setState(arr);
+        await delay(speed*2);
+        insertionSortVisualizer(i, "#82E0AA", "set");
+        insertionSortVisualizer(null, null, "clearCSS");
+    }
+}
+
+
+function insertionSortVisualizer(index, color, type){
+    const states = document.querySelectorAll(".state");
+    switch(type){
+        case "fill":
+            states[index].style.background = color;
+            break;
+        case "moveHole":
+            states[index].style.background = "#89b0ae";
+            states[index-1].style.background = color;
+            break;
+        case "set":
+            for(let i=0; i<=index; i++){
+                states[i].style.background = color;
+                states[i].setAttribute("sorted" , "true");
+            };
+        case "clearCSS":
+            states.forEach((state) => {
+                if (state.getAttribute("sorted") != "true") {
+                    state.style.background = "#89b0ae";
+                }
+            });
+            break;
     }
 }
 
@@ -156,5 +195,6 @@ function selectionVisualizer(index , color, type){
 let inputArr = [70, 40, 90, 20, 60, 10, 50, 30, 100, 80];
 setState(inputArr);
 // bubbleSort(inputArr);
-selectionSort(inputArr);
+// selectionSort(inputArr);
+insertionSort(inputArr);
 // console.log(inputArr);
