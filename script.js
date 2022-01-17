@@ -72,46 +72,45 @@ const bubbleVisualizer = (index, color, type) => {
 };
 
 async function insertionSort(arr) {
-    insertionSortVisualizer(0, "#82E0AA", "set")
+    insertionSortVisualizer(0, "#82E0AA", "set");
     for (let i = 1; i < arr.length; i++) {
         let val = arr[i];
         let blankSpace = i;
         insertionSortVisualizer(i, "grey", "fill");
-        await delay(speed*3);
+        await delay(speed * 3);
 
         while (blankSpace > 0 && arr[blankSpace - 1] > val) {
             arr[blankSpace] = arr[blankSpace - 1];
             insertionSortVisualizer(blankSpace, "grey", "moveHole");
             blankSpace--;
             setState(arr);
-            await delay(speed*2);
+            await delay(speed * 2);
         }
         insertionSortVisualizer(blankSpace, "green", "fill");
-        await delay(speed*2);
+        await delay(speed * 2);
         arr[blankSpace] = val;
         setState(arr);
-        await delay(speed*2);
+        await delay(speed * 2);
         insertionSortVisualizer(i, "#82E0AA", "set");
         insertionSortVisualizer(null, null, "clearCSS");
     }
 }
 
-
-function insertionSortVisualizer(index, color, type){
+function insertionSortVisualizer(index, color, type) {
     const states = document.querySelectorAll(".state");
-    switch(type){
+    switch (type) {
         case "fill":
             states[index].style.background = color;
             break;
         case "moveHole":
             states[index].style.background = "#89b0ae";
-            states[index-1].style.background = color;
+            states[index - 1].style.background = color;
             break;
         case "set":
-            for(let i=0; i<=index; i++){
+            for (let i = 0; i <= index; i++) {
                 states[i].style.background = color;
-                states[i].setAttribute("sorted" , "true");
-            };
+                states[i].setAttribute("sorted", "true");
+            }
         case "clearCSS":
             states.forEach((state) => {
                 if (state.getAttribute("sorted") != "true") {
@@ -125,14 +124,14 @@ function insertionSortVisualizer(index, color, type){
 async function selectionSort(arr) {
     for (let i = 0; i < arr.length - 1; i++) {
         let minIndex = i;
-        await delay(speed*2);
-        selectionVisualizer(i, 'yellow', 'fill');
+        await delay(speed * 2);
+        selectionVisualizer(i, "yellow", "fill");
         for (let j = i + 1; j < arr.length; j++) {
-            selectionVisualizer(j, 'red', 'passHighlight');
-            await delay(speed *2);
+            selectionVisualizer(j, "red", "passHighlight");
+            await delay(speed * 2);
             if (arr[j] < arr[minIndex]) {
-                if(minIndex != i){
-                    selectionVisualizer(minIndex , 'yellow',"removefill");
+                if (minIndex != i) {
+                    selectionVisualizer(minIndex, "yellow", "removefill");
                 }
                 await delay(speed);
                 minIndex = j;
@@ -141,25 +140,25 @@ async function selectionSort(arr) {
             }
         }
         if (minIndex != i) {
-            await delay(speed*2);
-            selectionVisualizer(minIndex, 'red', 'swap');
-            selectionVisualizer(i, 'red', 'swap');
-            await delay(speed*2);
+            await delay(speed * 2);
+            selectionVisualizer(minIndex, "red", "swap");
+            selectionVisualizer(i, "red", "swap");
+            await delay(speed * 2);
             let temp = arr[minIndex];
             arr[minIndex] = arr[i];
             arr[i] = temp;
         }
         setState(arr);
-        selectionVisualizer(i, 'green', 'set');
-        selectionVisualizer(null,null,"clearCSS");
+        selectionVisualizer(i, "green", "set");
+        selectionVisualizer(null, null, "clearCSS");
     }
-    selectionVisualizer(arr.length-1, "green", "set");
+    selectionVisualizer(arr.length - 1, "green", "set");
 }
 
-function selectionVisualizer(index , color, type){
+function selectionVisualizer(index, color, type) {
     const states = document.querySelectorAll(".state");
     states.forEach((state) => {
-        switch(type){
+        switch (type) {
             case "highlight":
                 let shadow = `0 0 0 2px ${color}`;
                 states[index].style.boxShadow = shadow;
@@ -167,13 +166,13 @@ function selectionVisualizer(index , color, type){
             case "passHighlight":
                 let shadow1 = `0 0 0 2px ${color}`;
                 states[index].style.boxShadow = shadow1;
-                states[index-1].style.boxShadow = 'none';
+                states[index - 1].style.boxShadow = "none";
                 break;
             case "fill":
                 states[index].style.background = color;
                 break;
             case "removefill":
-                states[index].style.background = "#89b0ae"; 
+                states[index].style.background = "#89b0ae";
                 break;
             case "set":
                 states[index].style.background = color;
@@ -187,7 +186,7 @@ function selectionVisualizer(index , color, type){
                     state.style.background = "#89b0ae";
                     state.style.boxShadow = "none";
                 }
-                break;     
+                break;
         }
     });
 }
@@ -195,6 +194,22 @@ function selectionVisualizer(index , color, type){
 let inputArr = [70, 40, 90, 20, 60, 10, 50, 30, 100, 80];
 setState(inputArr);
 // bubbleSort(inputArr);
-// selectionSort(inputArr);
-insertionSort(inputArr);
+selectionSort(inputArr);
+// insertionSort(inputArr);
 // console.log(inputArr);
+
+document.querySelector("#sort-select").addEventListener("change", (e) => {
+    inputArr = [70, 40, 90, 20, 60, 10, 50, 30, 100, 80];
+    setState(inputArr);
+    switch (e.target.value) {
+        case "1":
+            selectionSort(inputArr);
+            break;
+        case "2":
+            bubbleSort(inputArr);
+            break;
+        case "3":
+            insertionSort(inputArr);
+            break;
+    }
+});
